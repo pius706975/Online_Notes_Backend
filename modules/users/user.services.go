@@ -16,9 +16,9 @@ func NewUserService(repo User_Repo) *User_Service {
 	return &User_Service{repo}
 }
 
-//REGISTER
+// REGISTER
 func (s *User_Service) Register(data *models.User) *libs.Response {
-	
+
 	emailExists, err := s.repo.EmailExists(data.Email)
 	if err != nil {
 		return libs.Respond(err.Error(), 400, true)
@@ -30,7 +30,7 @@ func (s *User_Service) Register(data *models.User) *libs.Response {
 	usernameExists, err := s.repo.UsernameExists(data.Username)
 	if err != nil {
 		return libs.Respond(err.Error(), 400, true)
-	} 
+	}
 	if usernameExists {
 		return libs.Respond("Username already used", 400, true)
 	}
@@ -48,11 +48,11 @@ func (s *User_Service) Register(data *models.User) *libs.Response {
 	}
 
 	data.TokenVerify = tokenVerify
-	
+
 	emailData := libs.EmailData{
-		URL: os.Getenv("BASE_URL") + "/auth/verify_email" + tokenVerify,
+		URL:      os.Getenv("BASE_URL") + "/auth/verify_email/" + tokenVerify,
 		Username: data.Username,
-		Subject: "Your verification code",
+		Subject:  "Account Verification",
 	}
 
 	err = libs.SendEmail(data, &emailData)

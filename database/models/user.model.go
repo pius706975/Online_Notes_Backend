@@ -15,7 +15,7 @@ type User struct {
 	Role         string    `json:"role,omitempty" gorm:"default: user" valid:"-"`
 	Image        string    `json:"image,omitempty" valid:"-"`
 	TokenVerify  string    `json:"token_verify" valid:"-"`
-	IsActive     bool      `json:"is_active,omitempty" gorm:"default: false" valid:"-"`
+	IsVerified   bool      `json:"is_verified,omitempty" gorm:"default: false" valid:"-"`
 	CreatedAt    time.Time `json:"created_at" valid:"-"`
 	UpdatedAt    time.Time `json:"updated_at" valid:"-"`
 }
