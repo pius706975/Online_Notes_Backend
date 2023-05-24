@@ -150,3 +150,18 @@ func (s *User_Service) UpdateUser(data *models.User, ID string) *libs.Response {
 
 	return libs.Respond(result, 200, false)
 }
+
+// GET PROFILE
+func (s *User_Service) GetProfile(ID string) *libs.Response {
+	
+	data, err := s.repo.GetByID(ID)
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return libs.Respond(err.Error(), 404, true)
+		} else {
+			return libs.Respond(err.Error(), 500, true)
+		}
+	}
+
+	return libs.Respond(data, 200, false)
+}

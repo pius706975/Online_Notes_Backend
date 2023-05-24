@@ -61,3 +61,13 @@ func (c *User_Controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	c.svc.UpdateUser(&user, ID).Send(w)
 }
+
+// GET PROFILE
+func (c *User_Controller) GetProfile(w http.ResponseWriter, r *http.Request) {
+	
+	w.Header().Set("Content-type", "application/json")
+
+	ID := r.Context().Value(middlewares.UserID("user")).(string)
+
+	c.svc.GetProfile(ID).Send(w)
+}

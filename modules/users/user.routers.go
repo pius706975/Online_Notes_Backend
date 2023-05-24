@@ -13,6 +13,8 @@ func NewRouter(route *mux.Router, db *gorm.DB)  {
 	service := NewUserService(repo)
 	ctrl := NewUserController(service)
 
+	router.HandleFunc("/profile", middlewares.Handler(ctrl.GetProfile, middlewares.AuthMiddle("admin", "user"))).Methods("GET")
+
 	router.HandleFunc("/register", ctrl.Register).Methods("POST")
 
 	router.HandleFunc("/profile/edit", middlewares.Handler(ctrl.UpdateUser, middlewares.AuthCloudUploadFile(), middlewares.AuthMiddle("admin", "user"))).Methods("PUT")
