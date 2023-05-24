@@ -14,6 +14,7 @@ func NewRouter(route *mux.Router, db *gorm.DB)  {
 	ctrl := NewUserController(service)
 
 	router.HandleFunc("/profile", middlewares.Handler(ctrl.GetProfile, middlewares.AuthMiddle("admin", "user"))).Methods("GET")
+	router.HandleFunc("/all_users", middlewares.Handler(ctrl.GetAllUsers, middlewares.AuthMiddle("admin"))).Methods("GET")
 
 	router.HandleFunc("/register", ctrl.Register).Methods("POST")
 

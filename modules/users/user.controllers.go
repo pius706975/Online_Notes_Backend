@@ -62,6 +62,14 @@ func (c *User_Controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	c.svc.UpdateUser(&user, ID).Send(w)
 }
 
+// GET ALL USERS
+func (c *User_Controller) GetAllUsers(w http.ResponseWriter, r *http.Request) {
+	
+	w.Header().Set("Content-type", "application/json")
+
+	c.svc.GetAllUsers().Send(w)
+}
+
 // GET PROFILE
 func (c *User_Controller) GetProfile(w http.ResponseWriter, r *http.Request) {
 	

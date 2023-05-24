@@ -165,3 +165,14 @@ func (s *User_Service) GetProfile(ID string) *libs.Response {
 
 	return libs.Respond(data, 200, false)
 }
+
+// GET ALL USER
+func (s *User_Service) GetAllUsers() *libs.Response {
+	
+	data, err := s.repo.GetAllUsers()
+	if err != nil {
+		return libs.Respond(err.Error(), 400, true)
+	}
+
+	return libs.Respond(data, 200, false)
+}

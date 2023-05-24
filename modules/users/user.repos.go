@@ -107,12 +107,25 @@ func (r *User_Repo) GetToken(token string) (*models.User, error) {
 	return &data, nil
 }
 
+// GET ALL USERS
+func (r *User_Repo) GetAllUsers() (*models.Users, error) {
+	
+	var data models.Users
+
+	result := r.db.Select("user_id, name, username, email, gender, country, date_of_birth, mobile_number, token_verify, image, created_at, updated_at").Where("role = ?", "user").Order("created_at DESC").Find(&data).Error
+	if result != nil {
+		return nil, errors.New("get data failed")
+	}
+
+	return &data, nil
+}
+
 // GET BY ID
 func (r *User_Repo) GetByID(ID string) (*models.User, error) {
 
 	var data models.User
 
-	result := r.db.Select("user_id, name, username, email, gender, country, date_of_birth, token_verify, created_at, updated_at").Find(&data, "user_id = ?", ID).Error
+	result := r.db.Select("user_id, name, username, email, gender, country, date_of_birth, mobile_number, token_verify, image, created_at, updated_at").Find(&data, "user_id = ?", ID).Error
 	if result != nil {
 		return nil, errors.New("get data failed")
 	}
