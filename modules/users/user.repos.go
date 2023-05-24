@@ -81,6 +81,19 @@ func (r *User_Repo) TokenExists(token string) bool {
 	return err == nil
 }
 
+//UPDATE TOKEN 
+func (r *User_Repo) UpdateToken(ID, token string) error {
+	
+	var data models.User
+
+	err := r.db.Model(data).Where("user_id = ?", ID).Update("token_verify", token).Error
+	if err != nil {
+		return errors.New("update token failed")
+	}
+
+	return nil
+}
+
 // GET USER'S TOKEN
 func (r *User_Repo) GetToken(token string) (*models.User, error) {
 

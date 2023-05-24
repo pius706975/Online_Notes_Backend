@@ -52,8 +52,8 @@ func serve(cmd *cobra.Command, args []string) error {
 
 	serve := &http.Server{
 		Addr:         address,
-		WriteTimeout: time.Second * 60,
-		ReadTimeout:  time.Second * 60,
+		WriteTimeout: time.Minute * 2,
+		ReadTimeout:  time.Minute * 2,
 		IdleTimeout:  time.Minute,
 		Handler:      cors.Handler(mainRoute),
 	}

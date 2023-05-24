@@ -10,7 +10,7 @@ import (
 )
 
 func RouterApp() (*mux.Router, error) {
-	
+
 	mainRoute := mux.NewRouter()
 
 	db, err := database.NewDB() // change _ to `db` when you want to use it
@@ -28,6 +28,6 @@ func RouterApp() (*mux.Router, error) {
 	return mainRoute, nil
 }
 
-func homeHandler(w http.ResponseWriter, r *http.Request)  {
-	w.Write([]byte("This is Online notes backend!"))
+func homeHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("This is Online Notes backend!"))
 }

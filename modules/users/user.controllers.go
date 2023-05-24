@@ -5,8 +5,10 @@ import (
 	"net/http"
 
 	"github.com/asaskevich/govalidator"
+	"github.com/gorilla/schema"
 	"github.com/pius706975/backend/database/models"
 	"github.com/pius706975/backend/libs"
+	"github.com/pius706975/backend/middlewares"
 )
 
 type User_Controller struct {
@@ -37,4 +39,25 @@ func (c *User_Controller) Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	c.svc.Register(&user).Send(w)
+}
+
+// UPDATE
+func (c *User_Controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
+	
+	w.Header().Set("Content-type", "application/json")
+
+	ID := r.Context().Value(middlewares.UserID("user")).(string)
+
+	var user models.User
+
+	imageName := r.Context().Value("imageName").(string)
+	user.Image = imageName
+
+	err := schema.NewDecoder().Decode(&user, r.MultipartForm.Value)
+	if err != nil {
+		libs.Respond(err.Error(), 500, true).Send(w)
+		return
+	}
+
+	c.svc.UpdateUser(&user, ID).Send(w)
 }

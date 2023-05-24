@@ -1,6 +1,7 @@
 package auth
 
 import (
+
 	"github.com/pius706975/backend/database/models"
 	"github.com/pius706975/backend/libs"
 	"github.com/pius706975/backend/modules/users"
@@ -34,7 +35,7 @@ func (s *Auth_Service) Login(body *models.User) *libs.Response {
 		return libs.Respond("You account is not verified", 401, true)
 	}
 
-	jwt := libs.NewToken(body.UserID, user.Role)
+	jwt := libs.NewToken(user.UserID, user.Role)
 
 	token, err := jwt.CreateToken()
 	if err != nil {
