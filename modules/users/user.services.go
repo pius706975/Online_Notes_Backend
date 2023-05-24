@@ -151,6 +151,28 @@ func (s *User_Service) UpdateUser(data *models.User, ID string) *libs.Response {
 	return libs.Respond(result, 200, false)
 }
 
+// DELETE USER
+func (s User_Service) DeleteUser(ID string) *libs.Response {
+	
+	_, err := s.repo.GetByID(ID)
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return libs.Respond(err.Error(), 404, true)
+		} else {
+			return libs.Respond(err.Error(), 500, true)
+		}
+	}
+
+	err = s.repo.DeleteUser(ID)
+	if err != nil {
+		return libs.Respond(err.Error(), 400, true)
+	}
+
+	result := map[string]string{"message": "Account has been deleted"}
+
+	return libs.Respond(result, 200, false)
+}
+
 // GET PROFILE
 func (s *User_Service) GetProfile(ID string) *libs.Response {
 	

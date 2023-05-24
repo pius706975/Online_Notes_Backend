@@ -45,6 +45,19 @@ func (r *User_Repo) UpdateUser(data *models.User, ID string) (*models.User, erro
 	return data, nil
 }
 
+// DELETE USER
+func (r *User_Repo) DeleteUser(ID string) error {
+	
+	var data models.User
+
+	result := r.db.Delete(data, "user_id = ?", ID).Error
+	if result != nil {
+		return result
+	}
+
+	return nil
+}
+
 // EMAIL EXISTS
 func (r *User_Repo) EmailExists(email string) (bool, error) {
 

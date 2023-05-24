@@ -62,6 +62,16 @@ func (c *User_Controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	c.svc.UpdateUser(&user, ID).Send(w)
 }
 
+// DELETE USER
+func (c *User_Controller) DeleteUser(w http.ResponseWriter, r *http.Request) {
+	
+	w.Header().Set("Content-type", "application/json")
+
+	ID := r.Context().Value(middlewares.UserID("user")).(string)
+
+	c.svc.DeleteUser(ID).Send(w)
+}
+
 // GET ALL USERS
 func (c *User_Controller) GetAllUsers(w http.ResponseWriter, r *http.Request) {
 	

@@ -19,4 +19,6 @@ func NewRouter(route *mux.Router, db *gorm.DB)  {
 	router.HandleFunc("/register", ctrl.Register).Methods("POST")
 
 	router.HandleFunc("/profile/edit", middlewares.Handler(ctrl.UpdateUser, middlewares.AuthCloudUploadFile(), middlewares.AuthMiddle("admin", "user"))).Methods("PUT")
+
+	router.HandleFunc("/profile/delete", middlewares.Handler(ctrl.DeleteUser, middlewares.AuthMiddle("admin", "user"))).Methods("DELETE")
 }
