@@ -14,4 +14,6 @@ func NewRouter(route *mux.Router, db *gorm.DB)  {
 	ctrl := NewAuthController(*service)
 	
 	router.HandleFunc("/verify_email/{token}", ctrl.VerifyEmail).Methods("GET")
+
+	router.HandleFunc("/login", ctrl.Login).Methods("POST")
 }

@@ -106,3 +106,16 @@ func (r *User_Repo) GetByID(ID string) (*models.User, error) {
 
 	return &data, nil
 }
+
+//GET EMAIL 
+func (r *User_Repo) GetEmail(email string) (*models.User, error) {
+	
+	var data models.User
+
+	result := r.db.First(&data, "email = ?", email).Error
+	if result != nil {
+		return nil, errors.New("get data failed")
+	}
+
+	return &data, nil
+}

@@ -18,6 +18,32 @@ func NewAuthService(repo users.User_Repo) *Auth_Service {
 	return &Auth_Service{repo}
 }
 
+//LOGIN
+func (s *Auth_Service) Login(body *models.User) *libs.Response {
+	
+	user, err := s.repo.GetEmail(body.Email)
+	if err != nil {
+		return libs.Respond("Email or password is incorrect", 401, true)
+	}
+
+	if libs.PasswordCheck(body.Password, user.Password) {
+		return libs.Respond("Email or password is incorrect", 401, true)
+	}
+
+	if !user.IsVerified {
+		return libs.Respond("You account is not verified", 401, true)
+	}
+
+	jwt := libs.NewToken(body.UserID, user.Role)
+
+	token, err := jwt.CreateToken()
+	if err != nil {
+		libs.Respond(err.Error(), 500, true)
+	}
+
+	return libs.Respond(tokenRes{Token: token}, 200, false)
+}
+
 //VERIFY EMAIL
 func (s *Auth_Service) VerifyEmail(token string) *libs.Response {
 	
