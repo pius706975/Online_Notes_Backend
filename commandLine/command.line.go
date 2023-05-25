@@ -14,6 +14,7 @@ var InitCommand = cobra.Command{
 func init() {
 	InitCommand.AddCommand(libs.ServeCMD)
 	InitCommand.AddCommand(database.MigrateCMD)
+	InitCommand.AddCommand(database.SeedCMD)
 }
 
 func Run(args []string) error {
