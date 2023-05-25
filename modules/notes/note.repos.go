@@ -57,7 +57,7 @@ func (r *Note_Repo) GetAllNotes() (*models.Notes, error) {
 	
 	var data models.Notes
 
-	result := r.db.Find(&data).Error
+	result := r.db.Order("date desc").Find(&data).Error
 	if result != nil {
 		return nil, errors.New("get data failed")
 	}
