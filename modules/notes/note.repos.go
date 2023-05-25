@@ -51,3 +51,20 @@ func (r *Note_Repo) GetByID(ID string) (*models.Note, error) {
 
 	return &data, nil
 }
+
+// GET ALL NOTES
+func (r *Note_Repo) GetAllNotes() (*models.Notes, error) {
+	
+	var data models.Notes
+
+	result := r.db.Find(&data).Error
+	if result != nil {
+		return nil, errors.New("get data failed")
+	}
+
+	if len(data) <= 0 {
+		return nil, errors.New("data is empty")
+	}
+
+	return &data, nil
+}

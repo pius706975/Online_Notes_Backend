@@ -56,3 +56,11 @@ func (c *Note_Controller) DeleteNote(w http.ResponseWriter, r *http.Request) {
 
 	c.svc.DeleteNote(id).Send(w)
 }
+
+// GET ALL NOTES
+func (c *Note_Controller) GetAllNotes(w http.ResponseWriter, r *http.Request) {
+	
+	w.Header().Set("Content-type", "application/json")
+
+	c.svc.GetAllNotes().Send(w)
+}

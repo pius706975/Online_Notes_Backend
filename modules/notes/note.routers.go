@@ -12,6 +12,8 @@ func NewRouter(route *mux.Router, db *gorm.DB)  {
 	repo := NewNoteRepo(db)
 	service := NewNoteService(repo)
 	ctrl := NewNoteController(service)
+	
+	router.HandleFunc("/", middlewares.Handler(ctrl.GetAllNotes, middlewares.AuthMiddle("user"))).Methods("GET")
 
 	router.HandleFunc("/add_note", middlewares.Handler(ctrl.AddNewNote, middlewares.AuthMiddle("user"))).Methods("POST")
 

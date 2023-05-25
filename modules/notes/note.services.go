@@ -46,3 +46,14 @@ func (s *Note_Service) DeleteNote(ID string) *libs.Response {
 
 	return libs.Respond(result, 200, false)
 }
+
+// GET ALL NOTES
+func (s *Note_Service) GetAllNotes() *libs.Response {
+	
+	data, err := s.repo.GetAllNotes()
+	if err != nil {
+		return libs.Respond(err.Error(), 500, true)
+	}
+
+	return libs.Respond(data, 200, false)
+}
