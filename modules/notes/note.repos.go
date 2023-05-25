@@ -27,6 +27,17 @@ func (r *Note_Repo) AddNewNote(data *models.Note) (*models.Note, error) {
 	return data, nil
 }
 
+// UPDATE NOTE
+func (r *Note_Repo) UpdateNote(data *models.Note, ID string) (*models.Note, error) {
+	
+	result := r.db.Model(&data).Where("note_id = ?", ID).Updates(&data).Find(&data).Error
+	if result != nil {
+		return nil, errors.New("update failed")
+	}
+
+	return data, nil
+}
+
 // DELETE NOTE
 func (r *Note_Repo) DeleteNote(ID string) error {
 	

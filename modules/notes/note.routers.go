@@ -18,5 +18,7 @@ func NewRouter(route *mux.Router, db *gorm.DB)  {
 
 	router.HandleFunc("/add_note", middlewares.Handler(ctrl.AddNewNote, middlewares.AuthMiddle("user"))).Methods("POST")
 
+	router.HandleFunc("/edit/{id}", middlewares.Handler(ctrl.UpdateNote, middlewares.AuthMiddle("user"))).Methods("PUT")
+
 	router.HandleFunc("/delete/{id}", middlewares.Handler(ctrl.DeleteNote, middlewares.AuthMiddle("user"))).Methods("DELETE")
 }

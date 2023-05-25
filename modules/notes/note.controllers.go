@@ -43,6 +43,29 @@ func (c *Note_Controller) AddNewNote(w http.ResponseWriter, r *http.Request) {
 	c.svc.AddNewNote(&note).Send(w)
 }
 
+// UPDATE NOTE
+func (c *Note_Controller) UpdateNote(w http.ResponseWriter, r *http.Request) {
+	
+	w.Header().Set("Content-type", "application/json")
+
+	idStr := mux.Vars(r)
+	id, ok := idStr["id"]
+	if !ok {
+		libs.Respond("Get the ID", 400, true).Send(w)
+		return
+	}
+
+	var data models.Note
+
+	err := json.NewDecoder(r.Body).Decode(&data)
+	if err != nil {
+		libs.Respond(err.Error(), 400, true).Send(w)
+		return
+	}
+
+	c.svc.UpdateNote(&data, id).Send(w)
+}
+
 // DELETE NOTE
 func (c *Note_Controller) DeleteNote(w http.ResponseWriter, r *http.Request) {
 	

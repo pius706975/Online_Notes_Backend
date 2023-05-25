@@ -17,12 +17,59 @@ func NewNoteService(repo Note_Repo) *Note_Service {
 // ADD NOTE
 func (s *Note_Service) AddNewNote(data *models.Note) *libs.Response {
 	
+	// var user models.User
+
+	// history := &models.History{
+	// 	User_ID: user.UserID,
+	// 	Note_ID: data.NoteID,
+	// 	Status: "Created",
+	// 	CreatedAt: data.CreatedAt,
+	// 	UpdatedAt: data.UpdatedAt,
+	// }
+
+	// err_ := s.repo.db.Create(history).Error
+	// if err_ != nil {
+	// 	return libs.Respond(err_.Error(), 500, true)
+	// }
+
 	newData, err := s.repo.AddNewNote(data)
 	if err != nil {
 		return libs.Respond(err.Error(), 400, true)
 	}
 
 	return libs.Respond(newData, 200, false)
+}
+
+// UPDATE NOTE
+func (s *Note_Service) UpdateNote(data *models.Note, ID string) *libs.Response {
+	
+	var note models.Note
+
+	_, err := s.repo.GetByID(ID)
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			libs.Respond("Data not found", 404, true)
+		} else {
+			libs.Respond(err.Error(), 500, true)
+		}
+	}
+
+	if data.Title == "" {
+		data.Title = note.Title
+	}
+	if data.Date == "" {
+		data.Date = note.Date
+	}
+	if data.Note == "" {
+		data.Note = note.Note
+	}
+
+	result, err := s.repo.UpdateNote(data, ID)
+	if err != nil {
+		return libs.Respond(err.Error(), 400, true)
+	}
+
+	return libs.Respond(result, 200, false)
 }
 
 // DELETE NOTE
