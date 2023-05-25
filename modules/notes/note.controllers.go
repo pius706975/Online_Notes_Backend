@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/asaskevich/govalidator"
+	"github.com/gorilla/mux"
 	"github.com/pius706975/backend/database/models"
 	"github.com/pius706975/backend/libs"
 )
@@ -39,4 +40,19 @@ func (c *Note_Controller) AddNewNote(w http.ResponseWriter, r *http.Request) {
 	}
 
 	c.svc.AddNewNote(&note).Send(w)
+}
+
+// DELETE NOTE
+func (c *Note_Controller) DeleteNote(w http.ResponseWriter, r *http.Request) {
+	
+	w.Header().Set("Content-type", "application/json")
+
+	idStr := mux.Vars(r)
+	id, ok := idStr["id"]
+	if !ok {
+		libs.Respond("Get the ID", 400, true).Send(w)
+		return
+	}
+
+	c.svc.DeleteNote(id).Send(w)
 }
