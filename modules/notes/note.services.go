@@ -57,3 +57,14 @@ func (s *Note_Service) GetAllNotes() *libs.Response {
 
 	return libs.Respond(data, 200, false)
 }
+
+// SEARCH NOTE
+func (s *Note_Service) SearchNote(query string) *libs.Response {
+	
+	data, err := s.repo.SearchNote(query)
+	if err != nil {
+		return libs.Respond(err.Error(), 500, true)
+	}
+
+	return libs.Respond(data, 200, false)
+}

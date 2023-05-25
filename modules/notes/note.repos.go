@@ -2,6 +2,7 @@ package notes
 
 import (
 	"errors"
+	"strings"
 
 	"github.com/pius706975/backend/database/models"
 	"gorm.io/gorm"
@@ -64,6 +65,23 @@ func (r *Note_Repo) GetAllNotes() (*models.Notes, error) {
 
 	if len(data) <= 0 {
 		return nil, errors.New("data is empty")
+	}
+
+	return &data, nil
+}
+
+// SEARCH NOTE
+func (r *Note_Repo) SearchNote(query string) (*models.Notes, error) {
+	
+	var data models.Notes
+
+	result := r.db.Where("lower(notes.title) ILIKE ?", "%"+strings.ToLower(query)+"%").Find(&data).Error
+	if result != nil {
+		return nil, result
+	}
+
+	if len(data) <= 0 {
+		return nil, errors.New("data not found")
 	}
 
 	return &data, nil

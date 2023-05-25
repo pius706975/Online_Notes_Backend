@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/asaskevich/govalidator"
 	"github.com/gorilla/mux"
@@ -63,4 +64,15 @@ func (c *Note_Controller) GetAllNotes(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-type", "application/json")
 
 	c.svc.GetAllNotes().Send(w)
+}
+
+// SEARCH NOTE
+func (c *Note_Controller) SearchNote(w http.ResponseWriter, r *http.Request) {
+	
+	w.Header().Set("Content-type", "application/json")
+
+	query := mux.Vars(r)["query"]
+	query = strings.ToLower(query)
+
+	c.svc.SearchNote(query).Send(w)
 }
