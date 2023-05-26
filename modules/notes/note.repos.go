@@ -72,6 +72,18 @@ func (r *Note_Repo) DeleteNote(ID string) error {
 		return result
 	}
 
+	history := &models.History{
+		Note_ID: data.NoteID,
+		Status: "Deleted",
+		CreatedAt: data.CreatedAt,
+		UpdatedAt: data.UpdatedAt,
+	}
+
+	err_ := r.db.Create(history).Error
+	if err_ != nil {
+		return nil
+	}
+
 	return nil
 }
 

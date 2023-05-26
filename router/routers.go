@@ -6,6 +6,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/pius706975/backend/database"
 	"github.com/pius706975/backend/modules/auth"
+	"github.com/pius706975/backend/modules/history"
 	"github.com/pius706975/backend/modules/notes"
 	"github.com/pius706975/backend/modules/users"
 )
@@ -26,6 +27,7 @@ func RouterApp() (*mux.Router, error) {
 	users.NewRouter(subRouter, db)
 	auth.NewRouter(subRouter, db)
 	notes.NewRouter(subRouter, db)
+	history.NewRouter(subRouter, db)
 
 	return mainRoute, nil
 }
