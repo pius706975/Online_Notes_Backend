@@ -24,6 +24,18 @@ func (r *Note_Repo) AddNewNote(data *models.Note) (*models.Note, error) {
 		return nil, errors.New("create data failed")
 	}
 
+	history := &models.History{
+		Note_ID: data.NoteID,
+		Status: "Created",
+		CreatedAt: data.CreatedAt,
+		UpdatedAt: data.UpdatedAt,
+	}
+
+	err_ := r.db.Create(history).Error
+	if err_ != nil {
+		return nil, err_
+	}
+
 	return data, nil
 }
 
