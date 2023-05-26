@@ -47,6 +47,18 @@ func (r *Note_Repo) UpdateNote(data *models.Note, ID string) (*models.Note, erro
 		return nil, errors.New("update failed")
 	}
 
+	history := &models.History{
+		Note_ID: data.NoteID,
+		Status: "Edited",
+		CreatedAt: data.CreatedAt,
+		UpdatedAt: data.UpdatedAt,
+	}
+
+	err_ := r.db.Create(history).Error
+	if err_ != nil {
+		return nil, err_
+	}
+
 	return data, nil
 }
 
@@ -81,7 +93,7 @@ func (r *Note_Repo) GetAllNotes() (*models.Notes, error) {
 	
 	var data models.Notes
 
-	result := r.db.Order("date desc").Find(&data).Error
+	result := r.db.Order("created_at desc").Find(&data).Error
 	if result != nil {
 		return nil, errors.New("get data failed")
 	}

@@ -1,6 +1,7 @@
 package notes
 
 import (
+
 	"github.com/pius706975/backend/database/models"
 	"github.com/pius706975/backend/libs"
 	"gorm.io/gorm"
@@ -16,21 +17,6 @@ func NewNoteService(repo Note_Repo) *Note_Service {
 
 // ADD NOTE
 func (s *Note_Service) AddNewNote(data *models.Note) *libs.Response {
-	
-	// var user models.User
-
-	// history := &models.History{
-	// 	User_ID: user.UserID,
-	// 	Note_ID: data.NoteID,
-	// 	Status: "Created",
-	// 	CreatedAt: data.CreatedAt,
-	// 	UpdatedAt: data.UpdatedAt,
-	// }
-
-	// err_ := s.repo.db.Create(history).Error
-	// if err_ != nil {
-	// 	return libs.Respond(err_.Error(), 500, true)
-	// }
 
 	newData, err := s.repo.AddNewNote(data)
 	if err != nil {
@@ -56,9 +42,6 @@ func (s *Note_Service) UpdateNote(data *models.Note, ID string) *libs.Response {
 
 	if data.Title == "" {
 		data.Title = note.Title
-	}
-	if data.Date == "" {
-		data.Date = note.Date
 	}
 	if data.Note == "" {
 		data.Note = note.Note
@@ -99,7 +82,7 @@ func (s *Note_Service) GetAllNotes() *libs.Response {
 	
 	data, err := s.repo.GetAllNotes()
 	if err != nil {
-		return libs.Respond(err.Error(), 500, true)
+		return libs.Respond(err.Error(), 404, true)
 	}
 
 	return libs.Respond(data, 200, false)
@@ -110,7 +93,7 @@ func (s *Note_Service) SearchNote(query string) *libs.Response {
 	
 	data, err := s.repo.SearchNote(query)
 	if err != nil {
-		return libs.Respond(err.Error(), 500, true)
+		return libs.Respond(err.Error(), 404, true)
 	}
 
 	return libs.Respond(data, 200, false)
