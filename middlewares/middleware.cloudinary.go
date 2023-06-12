@@ -17,18 +17,18 @@ func AuthCloudUploadFile() Middleware {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
 			ctx := context.Background()
-			
+
 			cld, err := cloudinary.NewFromParams(os.Getenv("CLOUD_NAME"), os.Getenv("CLOUD_KEY"), os.Getenv("CLOUD_SECRET"))
 			if err != nil {
 				libs.Respond(err.Error(), 401, true)
 			}
 
 			r.Body = http.MaxBytesReader(w, r.Body, 2*1024*1024)
-			
+
 			file, fileHeader, err := r.FormFile("image")
 			if err != nil {
 				if err == http.ErrMissingFile {
-					i, _ := cld.Image("v1676028039/gorental/default_image.jpg")
+					i, _ := cld.Image("v1676028039/onlinenotes/default_image.jpg")
 					urlDefault, _ := i.String()
 					ctx := context.WithValue(r.Context(), "imageName", urlDefault)
 					next.ServeHTTP(w, r.WithContext(ctx))
@@ -47,7 +47,7 @@ func AuthCloudUploadFile() Middleware {
 
 			imgName := fmt.Sprintf("%d", time.Now().UnixNano())
 
-			upload, err := cld.Upload.Upload(ctx, file, uploader.UploadParams{Folder: "vehiclerental", PublicID: imgName})
+			upload, err := cld.Upload.Upload(ctx, file, uploader.UploadParams{Folder: "onlinenotes", PublicID: imgName})
 			if err != nil {
 				libs.Respond(err.Error(), 400, true).Send(w)
 			}
