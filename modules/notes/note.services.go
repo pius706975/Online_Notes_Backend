@@ -98,3 +98,13 @@ func (s *Note_Service) SearchNote(query string) *libs.Response {
 
 	return libs.Respond(data, 200, false)
 }
+
+func (s *Note_Service) GetByID(ID string) *libs.Response {
+	
+	data, err := s.repo.GetByID(ID)
+	if err != nil {
+		return libs.Respond(err.Error(), 404, true)
+	}
+
+	return libs.Respond(data, 200, false)
+}

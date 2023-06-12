@@ -99,3 +99,13 @@ func (c *Note_Controller) SearchNote(w http.ResponseWriter, r *http.Request) {
 
 	c.svc.SearchNote(query).Send(w)
 }
+
+func (c *Note_Controller) GetByID(w http.ResponseWriter, r *http.Request) {
+	
+	w.Header().Set("Content-type", "application/json")
+	
+	ID := mux.Vars(r)["id"]
+	ID = strings.ToLower(ID)
+
+	c.svc.GetByID(ID).Send(w)
+}
