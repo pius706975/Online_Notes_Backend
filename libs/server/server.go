@@ -43,7 +43,7 @@ func serve(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	var address string = "0.0.0.0:3030"
+	var address string = "0.0.0.0:3031"
 	if PORT := os.Getenv("PORT"); PORT != "" {
 		address = "0.0.0.0:" + PORT //change this address to 0.0.0.0 if it's used in docker
 	}
@@ -58,7 +58,7 @@ func serve(cmd *cobra.Command, args []string) error {
 		Handler:      cors.Handler(mainRoute),
 	}
 
-	log.Println("App is running on PORT 3030")
+	log.Println("App is running on PORT 3031")
 
 	return serve.ListenAndServe()
 }
